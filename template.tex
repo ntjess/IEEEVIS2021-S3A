@@ -44,7 +44,7 @@
 
 %% it is recomended to use ``\autoref{sec:bla}'' instead of ``Fig.~\ref{sec:bla}''
 \graphicspath{{figures/}{pictures/}{images/}{./}} % where to search for the images
-
+\vgtcinsertpkg
 \usepackage{microtype}                 % use micro-typography (slightly more compact, better to read)
 \PassOptionsToPackage{warn}{textcomp}  % to address font issues with \textrightarrow
 \usepackage{textcomp}                  % use better special symbols
@@ -52,8 +52,13 @@
 \usepackage{times}                     % we use Times as the main font
 \renewcommand*\ttdefault{txtt}         % a nicer typewriter font
 \usepackage{cite}                      % needed to automatically sort the references
+%\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false]{biblatex}
+%\addbibresource{template.bib}
 \usepackage{tabu}                      % only used for the table example
 \usepackage{booktabs}                  % only used for the table example
+\usepackage{subcaption,subfloat}
+
+\input{figures/makefigs}
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -81,8 +86,6 @@
 %% * system
 %% * theory/model
 \vgtcpapertype{please specify}
-
-\input{figures/makefigs}
 
 %% Paper title.
 \title{Global Illumination for Fun and Profit}
@@ -134,9 +137,6 @@
 %% It is disabled by the 'review' option or via the following command:
 % \nocopyrightspace
 
-
-\vgtcinsertpkg
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% START OF THE PAPER %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -146,10 +146,13 @@
 %% The ``\maketitle'' command must be the first command after the
 %% ``\begin{document}'' command. It prepares and prints the title block.
 
-%% the only exception to this rule is the \firstsection command
-\firstsection{Introduction}
-
 \maketitle
+
+\input{sections/intro}
+\input{sections/methods}
+\input{sections/results_discussion}
+\input{sections/conclusion}
+
 
 %% \section{Introduction} %for journal use above \firstsection{..} instead
 
@@ -159,11 +162,11 @@ The authors wish to thank A, B, and C. This work was supported in part by
 a grant from XYZ (\# 12345-67890).}
 
 %\bibliographystyle{abbrv}
-\bibliographystyle{abbrv-doi}
+%\bibliographystyle{abbrv-doi}
 %\bibliographystyle{abbrv-doi-narrow}
 %\bibliographystyle{abbrv-doi-hyperref}
 %\bibliographystyle{abbrv-doi-hyperref-narrow}
-
 \bibliography{template}
+%\printbibliography
 \end{document}
 

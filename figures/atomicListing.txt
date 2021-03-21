@@ -1,0 +1,11 @@
+def myFunc(a=0, b='first'):
+  """
+  :param a: 'a' documentation
+  :param b:
+    helpText: A special dropdown
+    pType: list
+    limits:
+      - first
+      - second
+      - third
+  """
