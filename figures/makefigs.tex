@@ -140,7 +140,44 @@
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.5\linewidth]{figures/cropExports}
-    \caption{Multiple export formats exist, among which is a utility which crops components out of the image and saves sub-images of their appearance and mask. This is useful for training on multiple forms of machine learning models.}
+    \caption{Multiple export formats exist, among which is a utility that crops components out of the image and saves sub-images of their appearance and mask. This is useful for training on multiple forms of machine learning models.}
     \label{fig:cropExports}
+\end{figure}
+}
+
+\newcommand{\makeRegionAnalyticsFig}{%
+\begin{figure*}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/regionAnalytics}
+    \caption{Outputs of each processing stage can be quickly viewed in context after an iteration of annotating. Upon inspecting the results, it is clear the failure point is a low $k$ value during K-means clustering and segmentation. The woman's shirt is not sufficiently distinguishable from the background palette to denote a separate entity. The red dot is an indicator of where the operator clicked during annotation.}
+    \label{fig:regionAnalytics}
+\end{figure*}
+}
+
+\newcommand{\makeSparsePeopleFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/sparsePeople}
+    \caption{Example image where people must be segmented from the background. The low density of foreground pixels means local processing saves orders of magnitudes on some algorithm computation times compared to directly segmenting the entire image. Retrieved from \url{https://unsplash.com/}.}
+    \label{fig:sparsePeople}
+\end{figure}
+}
+
+\newcommand{\makeTemplateMatchFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/templateMatch}
+    \caption{In cases where repeating structures are prevalent in an image, template matching can be effectively used as a simple region proposal technique. Annotated image retrieved from \url{https://unsplash.com/}.}
+    \label{fig:templateMatch}
+\end{figure}
+}
+
+
+\newcommand{\makePcbFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/pcb}
+    \caption{Example PCB segmentation. Surface-mount device (SMD) properties such as pin count, solder quality, connectivity, and more are difficult or impossible to infer without precise and accurate image segmentation.}
+    \label{fig:pcb}
 \end{figure}
 }
