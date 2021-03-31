@@ -1,0 +1,23 @@
+from s3a import miscPlugin, __main__
+# Also works with PySide2
+from PyQt5 import QtWidgets
+
+def myFunc(win, a=0, b='first'):
+    """
+    :param win: Reference to the S3A application
+    :param a: 'a' documentation
+    :param b:
+      helpText: A special dropdown
+      pType: list
+      limits:
+        - first
+        - second
+        - third
+    """
+    QtWidgets.QMessageBox.information(
+        None, 'Hello, world!', 
+        f'Function parameters: {a}, {b}\n'
+        f'Window image: {win.srcImgFname.name}')
+
+# Register custom function to the misc. toolbar
+miscPlugin.registerFunc(myFunc)

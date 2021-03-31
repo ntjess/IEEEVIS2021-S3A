@@ -59,6 +59,8 @@
 \usepackage{support-caption}
 \usepackage{subcaption,subfloat}
 \usepackage{minted}
+\usepackage{soul}
+\usepackage{placeins}
 
 \input{figures/makefigs}
 %% We encourage the use of mathptmx for consistent usage of times font
@@ -90,7 +92,7 @@
 \vgtcpapertype{please specify}
 
 %% Paper title.
-\title{Global Illumination for Fun and Profit}
+\title{Semi-Supervised Semantic Annotator (S3A): Toward Efficient Semantic Image Labeling}
 
 %% This is how authors are specified in the journal style
 
@@ -128,7 +130,7 @@
 \teaser{
   \centering
   \includegraphics[width=\linewidth]{figures/appOverview}
-  \caption{S3A's interface. The main view consists of an image to annotate, a component table of prior annotations, and a toolbar which changes functionality depending on context.}
+  \caption{S3A's interface. The main view consists of an image to annotate, a component table of prior annotations, and a toolbar which changes functionality depending on context. Image under annotation retrieved from \url{https://www.kaggle.com/bulentsiyah/semantic-drone-dataset}.}
   \label{fig:teaser}
 }
 
@@ -159,10 +161,7 @@
 %% \section{Introduction} %for journal use above \firstsection{..} instead
 
 %% if specified like this the section will be committed in review mode
-\acknowledgments{
-The authors wish to thank A, B, and C. This work was supported in part by
-a grant from XYZ (\# 12345-67890).}
-
+\FloatBarrier
 %\bibliographystyle{abbrv}
 \bibliographystyle{abbrv-doi}
 %\bibliographystyle{abbrv-doi-narrow}

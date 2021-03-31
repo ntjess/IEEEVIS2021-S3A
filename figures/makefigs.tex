@@ -1,3 +1,13 @@
+\newcommand{\makeNAMEFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/NAME}
+    \caption{CAPTION}
+    \label{fig:NAME}
+\end{figure}
+}
+
+
 \newcommand{\makeSampleFig}{%
 \begin{figure}[tb]
  \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
@@ -10,7 +20,7 @@
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\linewidth]{figures/sampleSegData}
-    \caption{Common use cases for semantic segmentation involve relatively few foreground objects, low-resolution data, and limited complexity per object.}
+    \caption{Common use cases for semantic segmentation involve relatively few foreground objects, low-resolution data, and limited complexity per object. Images retrieved from \url{https://cocodataset.org/\#explore}.}
     \label{fig:sampleSegData}
 \end{figure}
 }
@@ -19,7 +29,7 @@
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\linewidth]{figures/bees}
-    \caption{Sample segmentation involving a high-resolution image with many regions of interest and high foreground complexity.}
+    \caption{Sample segmentation involving a high-resolution image with many regions of interest and high foreground complexity. In such cases, unaided human annotation is infeasible with any time constraints. Image retrieved from \url{https://www.kaggle.com/kport354041/honeybee-positions}.}
     \label{fig:bees}
 \end{figure}
 }
@@ -90,4 +100,47 @@
     \caption{S3A's interface. The main view consists of an image to annotate, a component table of prior annotations, and a toolbar which changes functionality depending on context.}
     \label{fig:appOverview}
 \end{figure*}
+}
+
+\newcommand{\makeBoundCheckFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/boundCheck}
+    \caption{Automatic bounds checking mean mistakes and highly inaccurate values can be quickly identified before entering a dataset.}
+    \label{fig:boundCheck}
+\end{figure}
+}
+
+\newcommand{\makeStandFilterFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/standFilter_detailed}
+    \caption{An active filter for standing people only ensures operators can quickly verify all necessary individuals in the image have been identified. Image under annotation retrieved from \url{https://www.kaggle.com/fmena14/crowd-counting}.}
+    \label{fig:standFilter}
+\end{figure}
+}
+
+\newcommand{\makeCustomMiscFuncFig}{%
+\begin{figure*}[!htbp]
+    \centering
+    \subfloat[Listing for sample outputs]{%
+        \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+        \inputminted{Python}{figures/registeredListing.txt}
+    }
+    \hspace{1em}
+    \subfloat[The function can be dynamically called or its inputs modified]{%
+        \includegraphics[height=23\baselineskip]{figures/customMiscFunc}%
+    }
+    \caption{Standalone custom functions can be exposed to the main application in as little as one line of code. A minimal working example (MWE) is shown here.}
+    \label{fig:customMiscFuncFig}
+\end{figure*}
+}
+
+\newcommand{\makeCropExportsFig}{%
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/cropExports}
+    \caption{Multiple export formats exist, among which is a utility which crops components out of the image and saves sub-images of their appearance and mask. This is useful for training on multiple forms of machine learning models.}
+    \label{fig:cropExports}
+\end{figure}
 }

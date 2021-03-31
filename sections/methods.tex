@@ -1,36 +1,94 @@
 \section{Application Features}
-\subsection{Reconfigurability}
-\cite{jessurunComponentDetectionEvaluation2020} describes the idea of customizable application and color scheme behavior. Currently, any configuration of parameters can be saved in an intuitive, human-readable format. This can in turn be loaded or specified in a startup configuration as needed. Notably, S3A allows the user to freely select which logging data should color the input image. Depending on user goals, they can indicate each region with its instance ID, class, timestamp, and more. This allows users to visually evaluate common characteristics of their data with minimal effort. An example of this is shown in Fig. \ref{fig:reconfig}. The availability of both linear and set-wise colormaps assist visualizing both continuous ranges of values (e.g. numerical fields) and selection-based values (e.g. a "Class" dropdown).
 
-\makeReconfigFigs
+\subsection{Motivation}\label{sec:motivation}
+All application features are driven by the following objectives:
+
+Metadata should have significance rather than be treated as an afterthought
+
+Large images should have minimal impact on the annotation workflow
+
+Similarly, a multitude of regions or significant region complexity should not penalize the annotator.
+
+Why were these chosen? Cite some works about how 
 
 \subsection{Processing Framework}\label{sec:procFramework}
-S3A's processing framework is the core of its functionality. Functions exposed within S3A are thinly wrapped using a Process structure. This is responsible for parsing the function signature to provide documentation, parameter information, and more to the UI. Hence, all graphical depictions of abstracted beyond the concern of the user. As a result, incorporating additional application functionality requires fewer lines of code than constructing Jupyter or Panel interactive widgets. An example of this wrapping mechanism is depicted in Figure \ref{fig:atomicProc}.
+At the root of S3A's functionality and configurability lies its adaptive processing framework. Functions exposed within S3A are thinly wrapped using a Process structure responsible for parsing signature information to provide documentation, parameter information, and more to the UI. Hence, all graphical depictions are abstracted beyond the concern of the user while remaining trivial to specify (but can be modified or customized if desired). As a result, incorporating additional application functionality requires few lines of code. An example of this wrapping mechanism is depicted in \autoref{fig:atomicProc}. Processes interface with PyQtGraph parameters to gain access to data-customized widget types and more (\href{https://github.com/pyqtgraph/pyqtgraph}{https://github.com/pyqtgraph/pyqtgraph}).
 
 \makeAtomicProcFig
 
-Processes can also be arbitrarily nested and chained. This feature is critical for developing hierarchical image processing models, an example of which is shown in Fig. \ref{fig:nestedProc}. This is the framework for all image processing within S3A.
+Such processes can also be arbitrarily nested and chained. This feature is critical for developing hierarchical image processing models, an example of which is shown in \autoref{fig:nestedProc}. This framework is used for all image and region processing within S3A.
 
 \makeNestedProcFig
 
-Image processes are a special case of the generalized paradigm described above, since they are also capable of depicting stage-by-stage results after an operation has taken place. This is especially useful for determining the failure point in a chain of algorithms, allowing a user to quickly determine the most effective set of parameters for a given set of inputs. Moreover, image processes can be windowed at several levels (image, viewbox, component, and roi) to drastically improve performance in high-resolution inputs with sparsely populated foregrounds.
+\subsubsection{Image Processes}
+Image processes are a special case of the generalized paradigm described in \autoref{sec:procFramework}, since they are also capable of depicting stage-by-stage results and analytics after an operation has taken place. This feature is especially useful for determining the failure point in a chain of algorithms, allowing a user to quickly determine the most effective set of parameters for a given set of inputs. Moreover, image processes can be windowed at several levels (image, viewbox, component, and roi) to drastically improve performance in high-resolution inputs with sparsely populated foregrounds.
 
-\subsection{Region Prediction}
 
-Beyond single region editing, S3A also exposes a framework for multi-region prediction through traditional computer vision and machine learning techniques both for region proposal and bounding box refinement. With minimal scaffolding, users with tensorflow model files can insert their prediction mechanism directly into the annotation process and receive fine-tuned control over all input parameters.
+\hl{figure of region analytics}
 
-Since S3A utilizes a project structure, such predictions can be applied ahead of time to alternate images in the same project, meaning once a future image is opened it is already partially completed by this prediction mechanism.
+Consider the case where \hl{Use case for using region analytics to determine point of failure}
+
+\subsubsection{Impact}
+Of the existing open source tools for semantic annotation, few allow users to insert custom algorithms to perform the task at hand. Fewer still provide a building-block framework in which user functions can be mixed and matched as needed to produce optimal results. Hence, users are not required to uploading turnkey algorithmic solutions. Instead, they can hierarchically combine granular stages based on dynamic feedback to iteratively converge on a preferable processing tactic. As a result, datasets can receive annotations far more quickly and more accurately, improving the performance of subsequent trained models.
+
+\subsection{Model-Based Region Proposal}
+
+Beyond single region editing, S3A also exposes a framework for region-proposal mechanisms leveraging either traditional computer vision or machine learning techniques. With minimal scaffolding, users with existing algorithms or network architectures can insert their technique directly into the annotation process and receive fine-tuned control over all modifiable input parameters.
+
+Since S3A utilizes a project structure, such predictions can be applied ahead of time to alternate images in the same project if desired. As a result, future project images can potentially be completed by this prediction mechanism with even less manual effort. The ultimate goal of such an integration is to gradually convert the task of manual image \emph{annotation} to that of annotation \emph{verification}, which can be completed much more rapidly.
+
+\subsubsection{Impact}
+Unlike alternatives, S3A allows control of region proposal at both local and global areas. Thus, windowing-based approaches to region proposal can be incorporated without requiring image stitching, cropping, or similar preprocessing directives. This increases the flexibility and applicability of techniques which otherwise could not be applied to unprocessed, large images.
 
 \subsection{Component Table}
 
-Arbitrary metadata can be logged with each component as specified by a table configuration. Delegates for this metadata are automatically inferred, meaning dropdowns, spinboxes, checkboxes, and more are automatically integrated into the component table based on the default values specified. If no metadata is required, the user can simply rely on the default configuration which only records region boundary information. Data types are inferred by the default value for the field or can be manually specified, reducing the number of error insertion points. This process is further improved by the automated cell delegates described previously. These capabilities are unique to S3A, as most other software only allows text metadata tags.
+Arbitrary metadata can be logged with each component as specified by a table configuration. Delegates for this metadata are automatically inferred, meaning dropdowns, spinboxes, checkboxes, and more are automatically integrated into the component table based on the default values specified. If no metadata is required, the user can simply rely on the default configuration which only records region boundary information. Data types are inferred by the default value for the field or can be manually specified. These capabilities are unique to S3A, as most other software only allows text-based metadata tags with minimal validation.
 
-Furthermore, each delegate type can be filtered by specifying a range of allowable values to appear in the annotated image. In this manner, users can focus directly on the properties of most importance if they desire, and continue annotating as normal afterward.
+Furthermore, each delegate type can be filtered by specifying a range of allowable values to appear in the annotated image. In this manner, users can focus directly on the properties of most importance if they desire, and continue annotating as normal afterward. An example of this is shown in Fig \ref{fig:standFilter}, where an active filter for only a \texttt{Standing} posture allows users to quickly ensure all standing (not walking, sitting, etc.) individuals are identified.
+
+\makeStandFilterFig
+
+\subsubsection{Impact}
+Human-annotated datasets inevitably accrue errors, either through misinterpretation or mistaken inputs \cite{Dai_crowdSourceWorkflows,Russakovsky_humanCollabAnnotation2015}. Simple techniques such as using dropdowns instead of raw text entries, limitations on integer/float labels, and related control techniques can prevent such errors from occurring early on. Since these are directly based on minimal user specifications, S3A as an annotation platform inherently maintains a level of integrity in collected attributes and metadata. An example of this is shown in \autoref{fig:boundCheck}, which indicates the limits set by a user's field configuration do not allow negative values.
+
+\makeBoundCheckFig
+
+\subsection{Plugins for User Extensions}
+\autoref{sec:procFramework} briefly described how custom user functions are easily be wrapped within a process, exposing its parameters within S3A in a GUI format. A rich plugin interface is built on top of this capability, in which custom functions, table field predictors, default action hooks, and more can be directly integrated into S3A. In all cases, only a few lines of code are required to achieve most integrations between user code and plugin interface specifications.
+
+\subsubsection{General Plugins}
+The core plugin infrastructure consists of a function/property registration mechanism and an interaction window which shows them in the UI. As such, arbitrary user functions can be `registered` in one line of code to a plugin, where it will be effectively exposed to the user within S3A. The example from \autoref{fig:atomicProc} is shown again here, but integrated into the main application. In this case, it is appended to a list of miscellaneous functions, which are managed by a plugin provided for this purpose. Note that an extra function parameter, \texttt{win}, is optional and gives the function access to the running application.
+
+\makeCustomMiscFuncFig
+
+\subsubsection{Table Field Plugins}
+
+To better facilitate prediction and handling of important metadata, any table field can have one or more associated table field plugins. This interface gives the user hooks into common component-related application hooks such as drawing on the image, making a component selection, accepting a region, and more. In this manner, an arbitrary number of table field plugins can register to application actions and fully populate a table row with minimal required effort.
+
+\subsubsection{Impact}
+Plugin features are heavily oriented toward easing the process of automation both for general annotation needs and niche datasets. In either case, incorporating existing library functions is converted into a trivial task directly resulting in lower annotation and higher labeling accuracy.
 
 \subsection{Export Formats}
-An I/O interface is provided which allows data collected through S3A to be communicated in arbitrary formats, ranging from CSV to JSON to labeled bitmaps. These are also easily extensible by users who require customized formatting.
+An I/O interface is provided which allows data collected through S3A to be communicated in arbitrary formats, ranging from CSV to JSON to labeled bitmaps. These are also easily extendable by users who require customized formatting.
 
-Among these options, one export provides cutouts of each individual component for easier machine learning model training. These cutouts can be scaled to a uniform size (e.g. 500x500 pixels) to cater to networks requiring a fixed input layer width.
+Among these options, one export provides cutouts of each individual component for easier machine learning model training. These cutouts can be scaled to a uniform size (e.g. 500x500 pixels) to cater to networks requiring a fixed input layer width. Hence, images which can be intelligently subdivided into smaller segmentation challenges can be treated independently of the whole image if desired. An exmaple of such an export format is shown in \autoref{fig:cropExports}
 
-\subsection{User Extensibility}
-Sec. \ref{sec:procFramework} briefly describes how custom user functions can easily be wrapped within a process, exposing its parameters within S3A in a GUI format. A rich plugin interface is built on top of this capability, in which custom menu options, buttons, and actions can be registered within various application contexts. In all cases, only a few lines of code are required to achieve most integrations between user code and plugin interface specifications.
+\makeCropExportsFig
+
+\subsubsection{Impact}
+S3A was designed with ease of adoption and integration in mind from the beginning. Multiple export formats lower this entry barrier, and ensure multiple domains can leverage its provided data. Moreover, as mentioned in \autoref{sec:motivation}, another major goal during the creation of this software was to elevate the status of metadata to fully support its prediction, validation, and more. Hence, defining export formats that prioritize in this manner will hopefully motivate conversations about their potential importance and integration into existing annotation platforms.
+
+
+\subsection{Reconfigurability}
+Our previous work \cite{jessurunComponentDetectionEvaluation2020} described the idea of customizable application and color scheme behavior, a feature which has been significantly updated at present.
+
+\subsubsection{Persistent Customized States}
+Currently, any configuration of parameters can be saved in an intuitive, human-readable format. This can in turn be loaded or specified in a startup configuration as needed.
+
+\subsubsection{Color Schemes}
+Notably, S3A allows the user to freely select which table column should represent a component's color when overlaid on the input image. Depending on user goals, they have the option of displaying the component's ID, class, or any custom field as they see fit. This allows users to visually evaluate common characteristics of their data with minimal effort. An example of this is shown in \autoref{fig:reconfig}. The availability of both linear and set-wise colormaps assist visualizing both continuous ranges of values (e.g. numerical fields) and selection-based values (e.g. a "Class" dropdown). Importantly, this drastically decreases the time required to quickly spot anomalies in annotated metadata during manual quality assurance review.
+
+\makeReconfigFigs
+
+\subsubsection{Impact}
+While these features may sound irrelevant or superfluous, they provide users with shortcuts and rapid access which immensely reduces the amount of time required to complete an annotation batch. This saved time comes at no cost to output accuracy and allows users to annotate more images as a result. Hence, software improvements such as easily accessible buttons and modifiable hotkeys for custom functions directly translate to improved model performance on the collected data.

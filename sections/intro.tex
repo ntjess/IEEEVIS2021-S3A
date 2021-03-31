@@ -14,8 +14,8 @@ Quality semantic segmentation is difficult due to a reliance on large high-quali
 Manual annotation is error-prone, costly and greatly hinders scalability.
 Several tools have been proposed to alleviate the burden of collecting ground-truth labels for semantic segmentation~\cite{BestImageAnnotation}.
 % The more commonly used applications are listed in \cite{BestImageAnnotation}.
-Unfortunately, existing tools are heavily biased toward lower-resolution images with few regions of interest (ROI) (Figure~\ref{fig:sampleSegData}).
-While this may not be an issue for some datasets, such assumptions are \textit{crippling} for high-fidelity images with hundreds of annotated ROIs (Figure~\ref{fig:bees}).
+Unfortunately, existing tools are heavily biased toward lower-resolution images with few regions of interest (ROI) (\autoref{fig:sampleSegData}).
+While this may not be an issue for some datasets, such assumptions are \emph{crippling} for high-fidelity images with hundreds of annotated ROIs (\autoref{fig:bees}) \cite{Ladicky_whatWhereCombiningCRFs,Wang_multiLabelImageAnnotation}.
 % This scenario is represented in Figure~\ref{fig:bees} but can occur in multiple of the domains previously listed.
 % Especially when each region can be arbitrarily complex, the software will enter a non-responsive state where no annotation can be performed.
 
@@ -31,12 +31,11 @@ While this may not be an issue for some datasets, such assumptions are \textit{c
 %Toward this end, 
 S3A circumvents these pitfalls by providing deep customization of the annotation workflow at both a granular and high level.
 % To the best of our knowledge, it is the only application with this capability at both a granular and high level.
-Arbitrary python functions can be seamlessly integrated into the processing workflow, and every algorithm developed within S3A can be accessed in a headless (i.e. automated or scripted) manner independent of the manual GUI.
+Arbitrary python functions can be seamlessly integrated into the processing workflow, and every algorithm developed within S3A can be accessed in a headless (i.e. automated or scripted) manner independent of the GUI.
 
 In this paper, we present significant improvements to the fundamentals of S3A as previously introduced in \cite{jessurunComponentDetectionEvaluation2020}.
 % Our revisions presented in this work are significant improvements to the previous publication's future work.
 % In this paper, we present the core components of the S3A processing framework and labeling suite.
-This includes live app-level property customization, real-time algorithm modification and feedback, region prediction assistance, constrained component table editing based on allowed data types, a multitude of data export formats, and a highly adaptable set of plugin interfaces for application-specific extensions to S3A. The front-end GUI  is shown in Figure~\ref{fig:appOverview}.
+This includes live app-level property customization, real-time algorithm modification and feedback, region prediction assistance, constrained component table editing based on allowed data types, a multitude of data export formats, and a highly adaptable set of plugin interfaces for application-specific extensions to S3A.
 We also note the potential impact on the image processing community improving labeling speed, accuracy, and multiple insertion points for algorithm feedback.
-
-\makeAppOverviewFig
+Beyond software improvements, these features play significant roles in bridging the gap between human annotation efforts and scalable, automated segmentation methods \cite{Branson_humansInLoop}.
